@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhamad Zrary | Profile</title>
+    <!-- FontAwesome بۆ ئایکۆنەکان -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ڕێکخستنە سەرەتاییەکان */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #050505;
+            color: #fff;
+            overflow: hidden; /* ڕێگرتن لە سکڕۆڵ کاتی Splash */
+        }
+
+        /* نامەی ئاگادارکردنەوە بۆ تیکتۆک */
+        #in-app-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6a00);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            direction: rtl;
+        }
+
+        /* شاشەی سەرەتا (Splash Screen) - ئیفێکتی ئاگر و بریسکە */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out, visibility 1s;
+        }
+
+        .coding-text {
+            color: #ff6a00;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff6a00, 0 0 40px #ffae00, 0 0 80px #ffffff;
+            animation: pulseFire 1.5s infinite alternate;
+        }
+
+        .sparks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+        }
+
+        /* دروستکردنی بریسکە بە CSS Box-Shadow */
+        .spark {
+            position: absolute;
+            bottom: -10px;
+            width: 4px;
+            height: 4px;
+            background: #ffae00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff6a00, 0 0 20px #ff0000;
+            animation: rise 3s infinite ease-in;
+        }
+
+        @keyframes pulseFire {
+            0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff6a00, 0 0 40px #ffae00; transform: scale(1); }
+            100% { text-shadow: 0 0 20px #ff0000, 0 0 40px #ff6a00, 0 0 80px #ffae00, 0 0 100px #fff; transform: scale(1.05); }
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+
+        /* بەشی سەرەکی پڕۆفایل (دوای Splash) */
+        #main-content {
+            opacity: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            position: relative;
+            transition: opacity 1.5s ease-in;
+        }
+
+        /* باکگراوندی ئەنیمەیشن دار */
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #ff0000, #ff6a00);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: moveGlow 10s infinite alternate;
+        }
+
+        @keyframes moveGlow {
+            0% { transform: translate(-50px, -50px); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* ناوی سەرەوە */
+        header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ff6a00, #ee0979, #ffae00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(255, 106, 0, 0.3);
+            margin-bottom: 40px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* کۆنتەینەری ئایکۆنەکان بە ستایلی Glassmorphism */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            gap: 30px;
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .social-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ڕەنگەکانی سۆشیاڵ میدیا لە کاتی Hover */
+        .social-btn.snapchat:hover {
+            background: #FFFC00;
+            color: #000;
+            box-shadow: 0 0 20px #FFFC00;
+            transform: translateY(-10px);
+        }
+        .social-btn.instagram:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 0 20px #e1306c;
+            transform: translateY(-10px);
+        }
+        .social-btn.tiktok:hover {
+            background: #000;
+            color: #fff;
+            box-shadow: -5px -5px 15px #00f2fe, 5px 5px 15px #fe0979;
+            transform: translateY(-10px);
+        }
+
+        /* بەشی پیشاندانی زانیاری هەژمارەکان */
+        #info-box {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            visibility: hidden;
+        }
+
+        #info-box.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        #info-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        #info-desc {
+            color: #aaa;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: 'Noto Kufi Arabic', sans-serif; /* بۆ جوانی فۆنتی کوردی */
+            direction: rtl;
+        }
+
+        .follow-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            transition: 0.3s;
+        }
+
+        .follow-btn:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+
+        /* وەڵامدەرەوە بۆ شاشەی مۆبایل */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+            .glass-container { padding: 25px; gap: 15px; }
+            .social-btn { width: 55px; height: 55px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- نامەی ئاگادارکردنەوەی تیکتۆک (تەنها لە ناو تیکتۆک دەردەکەوێت) -->
+    <div id="in-app-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        تکایە لە سەرەوە کلیک لە سێ خاڵەکە بکه و (Open in Browser) هەڵبژێرە بۆ ئەوەی لینکەکان بێ کێشە کار بکەن.
+    </div>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="coding-text">&lt; تکایە چاوەڕوان بە /&gt;</div>
+        <div class="sparks" id="sparks-container"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <div class="bg-glow"></div>
+        
+        <header>
+            <h1>Muhamad Zrary</h1>
+        </header>
+
+        <div class="glass-container">
+            <div class="social-btn snapchat" onclick="showInfo('snapchat')">
+                <i class="fab fa-snapchat-ghost"></i>
+            </div>
+            <div class="social-btn instagram" onclick="showInfo('instagram')">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="social-btn tiktok" onclick="showInfo('tiktok')">
+                <i class="fab fa-tiktok"></i>
+            </div>
+        </div>
+
+        <!-- Box for displaying account details -->
+        <div id="info-box">
+            <h2 id="info-title">Title</h2>
+            <p id="info-desc">Description goes here</p>
+            <a href="#" id="info-link" class="follow-btn" target="_blank">سەردانکردن</a>
+        </div>
+    </div>
+
+    <script>
+        // دۆزینەوەی ئەوەی ئاخۆ کڕیارەکە لە ناو ئەپی تیکتۆک یان ئینستاگرامەوە هاتووە
+        document.addEventListener("DOMContentLoaded", function() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera;
+            if ((ua.indexOf("TikTok") > -1) || (ua.indexOf("Instagram") > -1)) {
+                document.getElementById('in-app-warning').style.display = 'block';
+            }
+        });
+
+        // دروستکردنی بریسکەی ئاگر بۆ Splash Screen
+        const sparksContainer = document.getElementById('sparks-container');
+        for (let i = 0; i < 40; i++) {
+            let spark = document.createElement('div');
+            spark.classList.add('spark');
+            spark.style.left = Math.random() * 100 + 'vw';
+            spark.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            spark.style.animationDelay = Math.random() * 2 + 's';
+            sparksContainer.appendChild(spark);
+        }
+
+        // لابردنی Splash Screen دوای 3 چرکە
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                document.body.style.overflow = 'auto'; // گەڕاندنەوەی سکڕۆڵ
+                mainContent.style.opacity = '1';
+            }, 1000); // چاوەڕێکردن بۆ تەواوبوونی فەیدەکە
+        }, 3000);
+
+        // زانیاری هەژمارەکان (بەستەرە قووڵەکان لێرەدا بەکارهاتوون بۆ چارەسەری کێشەکە)
+        const accountsData = {
+            snapchat: {
+                title: "Snapchat",
+                desc: "ئاددم بکە لە سناپچات: muhamadahamza6",
+                color: "#FFFC00",
+                link: "snapchat://add/muhamadahamza6" // بەستەری قووڵ بۆ کردنەوەی ئەپ ڕاستەوخۆ
+            },
+            instagram: {
+                title: "Instagram",
+                desc: "فۆڵۆم بکە لە ئینستاگرام: @muhamad.zrary",
+                color: "#E1306C",
+                link: "instagram://user?username=muhamad_a_hamza" // بەستەری قووڵ بۆ کردنەوەی ئەپ ڕاستەوخۆ
+            },
+            tiktok: {
+                title: "TikTok",
+                desc: "بینەری ڤیدیۆکانم بە لە تیکتۆک: @muhamad_zrary",
+                color: "#00f2fe",
+                link: "https://www.tiktok.com/@muhamadzrary02"
+            }
+        };
+
+        // فەنکشنی پیشاندانی زانیاری
+        function showInfo(platform) {
+            const infoBox = document.getElementById('info-box');
+            const title = document.getElementById('info-title');
+            const desc = document.getElementById('info-desc');
+            const link = document.getElementById('info-link');
+            
+            // داگرتنی بۆکسەکە بۆ ساتێک تا ئەنیمەیشنەکە دووبارە بێتەوە
+            infoBox.classList.remove('active');
+            
+            setTimeout(() => {
+                const data = accountsData[platform];
+                title.innerText = data.title;
+                title.style.color = platform === 'snapchat' ? '#FFFC00' : (platform === 'tiktok' ? '#00f2fe' : '#E1306C');
+                desc.innerText = data.desc;
+                link.href = data.link;
+                
+                // بەرزکردنەوەی بۆکسەکە
+                infoBox.classList.add('active');
+            }, 300); // نیو چرکە چاوەڕێ دەکات بۆ گۆڕینی داتا
+        }
+    </script>
+</body>
+</html>
